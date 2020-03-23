@@ -19,8 +19,8 @@ import {
 // import { createBottomTabNavigator, createAppContainer, } from 'react-navigation';
 // import {createStackNavigator} from 'react-navigation-stack'
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Homenav from './src/component/home'
-import Halamanutama from './src/component/halamanutama'
+// import Homenav from './src/component/home'
+// import Halamanutama from './src/component/halamanutama'
 import Tes from './src/component/tes'
 
 
