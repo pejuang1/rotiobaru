@@ -10,27 +10,37 @@ export default class App extends Component {
     super(props);
     this.state = {
       dataSource:[],
-      inputoutlet:null,
-      inputoutlet2:null,
+      inputoutlet:'',
+      inputoutlet2:'',
       modalVisible:false,
-      loading:false
+      loading:false,
+      checked:false
      };
    }
  
-  componentDidMount(){
-          Axios.get(`http://sci.rotio.id:5558/webserv/webapi/storage/${this.state.inputoutlet}/${this.state.inputoutlet2}/2002002000002`)
-          // Axios.get(`http://sci.rotio.id:5558/webserv/webapi/storage/R010101/R010109/2002002000002`)
-        .then((res)=>{
-            this.setState({loading:false, dataSource:res.data.result})
-              console.log(res.data.result)
-    })
-    .catch(error=>console.log(error)) //to catch the errors if any
+//   componentDidMount(){
+//       var {inputoutlet} = this.state
+//       var {inputoutlet2} = this.state
+//           Axios.get(`http://sci.rotio.id:5558/webserv/webapi/storage/${inputoutlet}/${inputoutlet2}/2002002000002`)
+//           // Axios.get(`http://sci.rotio.id:5558/webserv/webapi/storage/R010101/R010109/2002002000002`)
+//         .then((res)=>{
+//             this.setState({dataSource:res.data.result})
+//               console.log(res.data.result)
+//     })
+//     .catch(error=>console.log(error)) //to catch the errors if any
 
-}
+// }
 
     renderquantity=()=>{
-      if(this.state.checked){
+      if(this.state.inputoutlet&&this.state.inputoutlet2&&this.state.checked){
         console.log('masuk')
+        var {inputoutlet} = this.state
+      var {inputoutlet2} = this.state
+          Axios.get(`http://sci.rotio.id:5558/webserv/webapi/storage/${inputoutlet}/${inputoutlet2}/2002002000002`)
+          // Axios.get(`http://sci.rotio.id:5558/webserv/webapi/storage/R010101/R010109/2002002000002`)
+        .then((res)=>{
+            this.setState({dataSource:res.data.result})
+              console.log(res.data.result)
         return this.state.dataSource.map((val,index)=>{
         // alert(val.name)
         return(
@@ -43,6 +53,7 @@ export default class App extends Component {
         </View>
             )
           })
+        })
         }
     }
 
@@ -67,6 +78,17 @@ export default class App extends Component {
 
         renderan=(visible)=>{
             this.setState({modalVisible:visible})
+        }
+
+        valuechange=(text, field)=>{
+          if(field==='name'){
+            this.setState({inputoutlet:text})
+          }
+        }
+        valuechange2=(text, field)=>{
+          if(field==='name2'){
+            this.setState({inputoutlet2:text})
+          }
         }
  
     render(){
@@ -99,14 +121,14 @@ export default class App extends Component {
                     label='From'
                     value={this.state.inputoutlet}
                     containerStyle={{width:200}}
-                    onChangeText={(text)=>this.setState({inputoutlet:text})}
+                    onChangeText={(text)=>this.valuechange(text, 'name')}
                     placeholder='Input kode outlet'
                     ></Input>
                     <Input
                     containerStyle={{width:200}}
                     label='To'
                     value={this.state.inputoutlet2}
-                    onChangeText={(text)=>this.setState({inputoutlet2:text})}
+                    onChangeText={(text)=>this.valuechange2(text, 'name2')}
                     placeholder='Input kode outlet'
                     ></Input>
                     </View>
